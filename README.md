@@ -1,30 +1,54 @@
 # Voice Memos Exporter
 
-A powerful desktop application that makes exporting your Apple Voice Memos effortless. Seamlessly access, manage, and export your voice recordings with a user-friendly interface.
+<p align="center">
+  <img src="app_icon.png" alt="Voice Memos Exporter Logo" width="128" height="128">
+</p>
 
-![Full Disk Access Required]
+<p align="center">
+  <strong>Effortlessly Export Your Voice Memos: The Missing Bridge Between Voice Memos and Your Workflow</strong>
+</p>
+
+<p align="center">
+  <a href="#features">Features</a> •
+  <a href="#installation">Installation</a> •
+  <a href="#usage">Usage</a> •
+  <a href="#faq">FAQ</a> •
+  <a href="#privacy">Privacy</a> •
+  <a href="#contributing">Contributing</a>
+</p>
 
 ## Features
 
-- 🔍 **Smart Search**: Instantly find recordings by title, date, or duration
-- ✨ **Clean Interface**: Modern, intuitive design that feels native to macOS
 - 📦 **Bulk Export**: Select multiple recordings and export them in one click
 - 🔄 **Progress Tracking**: Real-time progress monitoring for exports
 - 🎯 **Smart Naming**: Automatic handling of duplicate filenames
 - 🔒 **Privacy First**: Works locally with your Voice Memos database
 
-## Requirements
+## Why Voice Memos Exporter?
 
-- macOS 10.15 (Catalina) or later
-- Full Disk Access permission for accessing Voice Memos
-- At least 50MB of free disk space
+- **Save Time**: Export multiple recordings at once instead of one by one
+- **Stay Organized**: Smart naming prevents duplicate filenames
+- **Peace of Mind**: Your recordings stay private - everything happens locally
+- **Native Experience**: Feels right at home on your Mac
 
 ## Installation
 
-1. Download the latest release from the releases page
+### Direct Download
+1. Download the latest release from the [releases page](https://github.com/yourusername/voice-memos-exporter/releases)
 2. Move Voice Memos Exporter to your Applications folder
 3. Launch the application
-4. Grant Full Disk Access when prompted (required for accessing Voice Memos)
+4. Grant Full Disk Access when prompted
+
+### Homebrew
+```bash
+brew install --cask voice-memos-exporter
+```
+
+## Requirements
+
+- macOS 10.15 (Catalina) or later
+- Full Disk Access permission
+- At least 50MB of free disk space
 
 ## Usage
 
@@ -34,39 +58,33 @@ A powerful desktop application that makes exporting your Apple Voice Memos effor
 4. **Export**: Click 'Export Selected' and choose your destination folder
 5. **Done**: Your recordings will be exported with original quality preserved
 
+## FAQ
+
+### Why do you need Full Disk Access?
+macOS requires Full Disk Access to read the Voice Memos database. This is a security feature of macOS to protect your privacy.
+
+### Where are my exported files saved?
+You choose the destination folder during export. Files are saved with their original names, with numbers added if duplicates exist.
+
+### Do you collect any data?
+No. Voice Memos Exporter works completely offline and does not collect or transmit any data.
+
 ## Privacy & Security
 
 - Works completely offline
-- No data is collected or transmitted
-- Requires Full Disk Access (macOS security requirement)
-- Read-only access to your Voice Memos database
+- No data collection or transmission
+- Read-only access to Voice Memos
+- Source code available for audit
 
-## Troubleshooting
+## Contributing
 
-### Full Disk Access
-
-If you see a permissions error:
-
-1. Click 'Open Security Settings' in the dialog
-2. Navigate to Privacy & Security > Full Disk Access
-3. Click the lock to make changes
-4. Add Voice Memos Exporter to the allowed applications
-5. Restart the application
-
-### Common Issues
-
-- **No recordings showing**: Ensure Full Disk Access is granted
-- **Export failed**: Check destination folder permissions
-- **Search not working**: Try restarting the application
-
-## Support
-
-For bug reports or feature requests, please open an issue on GitHub.
+We welcome contributions! Please see our [Contributing Guidelines](docs/CONTRIBUTING.md) for details.
 
 ## License
 
-MIT License - feel free to modify and use this software as you like.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
 
 ## Credits
 
-Developed by Rudra Kabir
+Developed with ❤️ by Rudra Kabir
