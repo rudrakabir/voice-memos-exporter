@@ -21,10 +21,12 @@ class VoiceMemosExporter:
         self.db_path = os.path.expanduser("~/Library/Group Containers/group.com.apple.VoiceMemos.shared/Recordings/CloudRecordings.db")
         self.recordings_path = os.path.dirname(self.db_path)
         self.search_var = tk.StringVar()
-        self.search_var.trace('w', self.filter_recordings)
         
         # Create GUI elements
         self.create_widgets()
+        
+        # Now bind the search trace
+        self.search_var.trace('w', self.filter_recordings)
         
         # Load recordings
         self.load_recordings()
@@ -135,12 +137,51 @@ class VoiceMemosExporter:
     def filter_recordings(self, *args):
         """Filter recordings based on search term"""
         search_term = self.search_var.get().lower()
-        for item in self.tree.get_children():
-            values = self.tree.item(item)['values']
-            if any(search_term in str(value).lower() for value in values):
-                self.tree.reattach(item, '', 'end')
-            else:
-                self.tree.detach(item)
+        
+        # Store current items that are checked
+        checked_items = {item for item in self.tree.get_children() 
+                       if self.tree.item(item)['values'][3] == '☑'}
+        
+        # Clear the tree view
+        self.tree.delete(*self.tree.get_children())
+        
+        # Reconnect to database and reload all items
+        try:
+            conn = sqlite3.connect(self.db_path)
+            cursor = conn.cursor()
+            
+            cursor.execute("""
+                SELECT ZPATH, ZENCRYPTEDTITLE, ZDATE, ZDURATION 
+                FROM ZCLOUDRECORDING 
+                ORDER BY ZDATE DESC
+            """)
+            
+            for path, title, date, duration in cursor.fetchall():
+                if path:  # Only process if path exists
+                    # Use title if available, otherwise use filename
+                    display_title = title if title else os.path.splitext(os.path.basename(path))[0]
+                    
+                    # Convert date
+                    date_obj = datetime(2001, 1, 1) + timedelta(seconds=date)
+                    date_str = date_obj.strftime("%Y-%m-%d %H:%M:%S")
+                    
+                    # Format duration
+                    duration_str = f"{int(duration // 60)}:{int(duration % 60):02d}"
+                    
+                    # Only insert if it matches the search term (if there is one)
+                    if not search_term or any(search_term in str(value).lower() 
+                       for value in [display_title, date_str, duration_str]):
+                        # Insert with the appropriate checked state
+                        check_mark = '☑' if path in checked_items else '☐'
+                        self.tree.insert('', 'end', values=(display_title, date_str, duration_str, check_mark))
+            
+            conn.close()
+            
+        except sqlite3.Error as e:
+            messagebox.showerror("Database Error", f"Error accessing database: {str(e)}")
+        except Exception as e:
+            messagebox.showerror("Error", f"An error occurred: {str(e)}")
+
 
     def load_recordings(self):
         try:
@@ -256,7 +297,9 @@ class VoiceMemosExporter:
                     source_path = os.path.join(self.recordings_path, result[0])
                     if os.path.exists(source_path):
                         # Create destination path with original filename
-                        dest_path = os.path.join(export_dir, os.path.basename(source_path))
+                        title = values[0]
+                        _, ext = os.path.splitext(source_path)
+                        dest_path = os.path.join(export_dir, f"{title}{ext}")
                         
                         # Handle duplicate filenames
                         base, ext = os.path.splitext(dest_path)
