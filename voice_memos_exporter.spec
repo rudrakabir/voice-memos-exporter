@@ -1,6 +1,5 @@
 # -*- mode: python ; coding: utf-8 -*-
 
-
 a = Analysis(
     ['voice_memos_exporter.py'],
     pathex=[],
@@ -35,10 +34,17 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
+    icon='icon.icns'  # Added icon
 )
 app = BUNDLE(
     exe,
-    name='voice_memos_exporter.app',
-    icon=None,
-    bundle_identifier=None,
+    name='Voice Memos Exporter.app',
+    icon='icon.icns',
+    bundle_identifier='com.rudrakabir.voicememosexporter',
+    version='1.0.0',
+    info_plist={
+        'LSMinimumSystemVersion': '10.12',
+        'CFBundleShortVersionString': '1.0.0',
+        'CFBundleVersion': '1.0.0'
+    }
 )

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Background -->
+  <circle cx="256" cy="256" r="256" fill="#007AFF"/>
+  
+  <!-- Microphone -->
+  <rect x="216" y="96" width="80" height="160" rx="40" fill="white"/>
+  <path d="M176 256c0 44.18 35.82 80 80 80s80-35.82 80-80" stroke="white" stroke-width="32" fill="none"/>
+  
+  <!-- Export Arrow -->
+  <path d="M256 336v80M208 376l48 40 48-40" stroke="white" stroke-width="32" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+</svg>

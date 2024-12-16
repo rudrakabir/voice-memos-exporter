@@ -15,8 +15,8 @@ IMPORTANT: Do NOT post this list to the issue-tracker. Use it as a basis for
             tracking down the missing module yourself. Thanks!
 
 missing module named winreg - imported by importlib._bootstrap_external (conditional)
-missing module named nt - imported by shutil (conditional), importlib._bootstrap_external (conditional), ntpath (optional), _colorize (delayed, conditional, optional), os (delayed, conditional, optional)
+missing module named nt - imported by os (delayed, conditional, optional), ntpath (optional), shutil (conditional), importlib._bootstrap_external (conditional), _colorize (delayed, conditional, optional)
 missing module named _frozen_importlib_external - imported by importlib._bootstrap (delayed), importlib (optional), importlib.abc (optional)
 excluded module named _frozen_importlib - imported by importlib (optional), importlib.abc (optional)
-missing module named _winapi - imported by encodings (delayed, conditional, optional), shutil (conditional), ntpath (optional), subprocess (conditional)
+missing module named _winapi - imported by ntpath (optional), encodings (delayed, conditional, optional), shutil (conditional), subprocess (conditional)
 missing module named msvcrt - imported by subprocess (optional)
