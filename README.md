@@ -1,90 +1,52 @@
 # Voice Memos Exporter
 
 <p align="center">
-  <img src="app_icon.png" alt="Voice Memos Exporter Logo" width="128" height="128">
+  <img src="app_icon.png" alt="Voice Memos Exporter Icon" width="128" height="128">
 </p>
+
+A simple Mac app that lets you bulk Voice Memos from the Mac app at once. Stop exporting recordings one by one - just select and export them all together.
 
 <p align="center">
-  <strong>Effortlessly Export Your Voice Memos: The Missing Bridge Between Voice Memos and Your Workflow</strong>
+  <img src="screenshot.png" alt="Voice Memos Exporter Screenshot" width="800">
 </p>
 
-<p align="center">
-  <a href="#features">Features</a> •
-  <a href="#installation">Installation</a> •
-  <a href="#usage">Usage</a> •
-  <a href="#faq">FAQ</a> •
-  <a href="#privacy">Privacy</a> •
-  <a href="#contributing">Contributing</a>
-</p>
+## What It Does
 
-## Features
-
-- 📦 **Bulk Export**: Select multiple recordings and export them in one click
-- 🔄 **Progress Tracking**: Real-time progress monitoring for exports
-- 🎯 **Smart Naming**: Automatic handling of duplicate filenames
-- 🔒 **Privacy First**: Works locally with your Voice Memos database
-
-## Why Voice Memos Exporter?
-
-- **Save Time**: Export multiple recordings at once instead of one by one
-- **Stay Organized**: Smart naming prevents duplicate filenames
-- **Peace of Mind**: Your recordings stay private - everything happens locally
-- **Native Experience**: Feels right at home on your Mac
+- Export multiple voice memos at once, export your entire voice memos to disk
+- Search through your recordings
+- Works offline, no data collection
+- Looks and feels like a native Mac app
 
 ## Installation
 
-### Direct Download
-1. Download the latest release from the [releases page](https://github.com/yourusername/voice-memos-exporter/releases)
-2. Move Voice Memos Exporter to your Applications folder
-3. Launch the application
-4. Grant Full Disk Access when prompted
+1. Download newest Release
+2. Move it to your Applications folder
+3. Open the app
+4. Allow Full Disk Access when asked (needed to read Voice Memos)
 
-### Homebrew
-```bash
-brew install --cask voice-memos-exporter
-```
+## How to Use
+
+1. Open the app
+2. Select the recordings you want to export
+3. Click "Export Selected"
+4. Choose where to save them
+5. Done!
 
 ## Requirements
 
-- macOS 10.15 (Catalina) or later
-- Full Disk Access permission
-- At least 50MB of free disk space
+- macOS 10.15 or newer
+- Full Disk Access permission (for Voice Memos access)
 
-## Usage
+## Common Questions
 
-1. **Launch**: Open Voice Memos Exporter
-2. **Browse**: View your voice memos with detailed information
-3. **Select**: Choose recordings using checkboxes or 'Select All'
-4. **Export**: Click 'Export Selected' and choose your destination folder
-5. **Done**: Your recordings will be exported with original quality preserved
+**Q: Why do you need Full Disk Access?**
+A: macOS requires this permission to read Voice Memos. Without it, no app can access your recordings.
 
-## FAQ
+**Q: Is my data safe?**
+A: Yes! The app works completely offline. It just reads your Voice Memos and copies the ones you select.
 
-### Why do you need Full Disk Access?
-macOS requires Full Disk Access to read the Voice Memos database. This is a security feature of macOS to protect your privacy.
-
-### Where are my exported files saved?
-You choose the destination folder during export. Files are saved with their original names, with numbers added if duplicates exist.
-
-### Do you collect any data?
-No. Voice Memos Exporter works completely offline and does not collect or transmit any data.
-
-## Privacy & Security
-
-- Works completely offline
-- No data collection or transmission
-- Read-only access to Voice Memos
-- Source code available for audit
-
-## Contributing
-
-We welcome contributions! Please see our [Contributing Guidelines](docs/CONTRIBUTING.md) for details.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+**Q: What if I have files with the same name?**
+A: The app automatically adds numbers to avoid overwriting files.
 
 
-## Credits
-
-Developed with ❤️ by Rudra Kabir
+Made by Rudra Kabir
