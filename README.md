@@ -4,7 +4,7 @@
   <img src="app_icon.png" alt="Voice Memos Exporter Icon" width="128" height="128">
 </p>
 
-A simple Mac app that lets you bulk Voice Memos from the Mac app at once. Stop exporting recordings one by one - just select and export them all together.
+A simple Mac app that lets you bulk export Voice Memos from the Mac app all at once. Stop exporting recordings one by one - just select and export them all together.
 
 <p align="center">
   <img src="screenshot.png" alt="Voice Memos Exporter Screenshot" width="800">
@@ -15,7 +15,7 @@ A simple Mac app that lets you bulk Voice Memos from the Mac app at once. Stop e
 - Export multiple voice memos at once, export your entire voice memos to disk
 - Search through your recordings
 - Works offline, no data collection
-- Looks and feels like a native Mac app
+- Will transfer all your iPhone voice memos too, if they are synced via iCloud
 
 ## Installation
 
