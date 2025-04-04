@@ -26,7 +26,7 @@ class VoiceMemosExporter:
         self.create_widgets()
         
         # Now bind the search trace
-        self.search_var.trace('w', self.filter_recordings)
+        self.search_var.trace_add('write', self.filter_recordings)
         
         # Load recordings
         self.load_recordings()
@@ -42,17 +42,22 @@ class VoiceMemosExporter:
         """Show a custom dialog with instructions for granting Full Disk Access"""
         dialog = tk.Toplevel(self.root)
         dialog.title("Full Disk Access Required")
-        dialog.geometry("500x400")
+        dialog.geometry("500x500")  # Increased height
+        dialog.minsize(500, 500)  # Set minimum size
         dialog.transient(self.root)
         dialog.grab_set()
 
-        warning_label = ttk.Label(dialog, text="⚠️", font=('TkDefaultFont', 48))
+        # Main container frame
+        main_frame = ttk.Frame(dialog)
+        main_frame.pack(fill=tk.BOTH, expand=True, padx=20, pady=20)
+
+        warning_label = ttk.Label(main_frame, text="⚠️", font=('TkDefaultFont', 48))
         warning_label.pack(pady=10)
 
-        ttk.Label(dialog, text="Full Disk Access Required", font=('TkDefaultFont', 14, 'bold')).pack(pady=5)
+        ttk.Label(main_frame, text="Full Disk Access Required", font=('TkDefaultFont', 14, 'bold')).pack(pady=5)
         
-        instructions = ttk.Frame(dialog)
-        instructions.pack(fill=tk.BOTH, expand=True, padx=20, pady=10)
+        instructions = ttk.Frame(main_frame)
+        instructions.pack(fill=tk.BOTH, expand=True, pady=10)
         
         steps = [
             "1. Click 'Open Security Settings' below",
@@ -68,13 +73,19 @@ class VoiceMemosExporter:
         for step in steps:
             ttk.Label(instructions, text=step, wraplength=400).pack(anchor='w', pady=2)
 
-        button_frame = ttk.Frame(dialog)
-        button_frame.pack(fill=tk.X, padx=20, pady=20)
+        # Button frame at the bottom
+        button_frame = ttk.Frame(main_frame)
+        button_frame.pack(side=tk.BOTTOM, fill=tk.X, pady=(20, 0))
         
+        # Configure button frame columns
+        button_frame.columnconfigure(0, weight=1)
+        button_frame.columnconfigure(1, weight=1)
+        
+        # Add buttons with grid
         ttk.Button(button_frame, text="Open Security Settings", 
-                  command=lambda: [self.open_security_preferences(), dialog.destroy()]).pack(side=tk.LEFT, padx=5)
+                  command=lambda: [self.open_security_preferences(), dialog.destroy()]).grid(row=0, column=0, padx=5, sticky='e')
         ttk.Button(button_frame, text="Close", 
-                  command=dialog.destroy).pack(side=tk.RIGHT, padx=5)
+                  command=dialog.destroy).grid(row=0, column=1, padx=5, sticky='w')
 
     def create_widgets(self):
         main_frame = ttk.Frame(self.root, padding="10")

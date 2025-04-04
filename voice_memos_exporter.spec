@@ -44,7 +44,7 @@ app = BUNDLE(
     version='1.0.1',
     info_plist={
         'LSMinimumSystemVersion': '10.12',
-        'CFBundleShortVersionString': '1.0.0',
-        'CFBundleVersion': '1.0.0'
+        'CFBundleShortVersionString': '1.0.2',
+        'CFBundleVersion': '1.0.2'
     }
 )
