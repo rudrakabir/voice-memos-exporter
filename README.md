@@ -10,6 +10,12 @@ A simple Mac app that lets you bulk export Voice Memos from the Mac app all at o
   <img src="screenshot.png" alt="Voice Memos Exporter Screenshot" width="800">
 </p>
 
+
+If you find this app useful, consider supporting me:  
+☕ [Buy Me a Coffee](https://www.buymeacoffee.com/rudrakabir)
+
+
+
 ## What It Does
 
 - Export multiple voice memos at once, export your entire voice memos to disk
@@ -50,6 +56,6 @@ A: The app automatically adds numbers to avoid overwriting files.
 
 Made with ❤️
 
-If you find this extension useful, consider supporting me:  
+If you find this app useful, consider supporting me:  
 ☕ [Buy Me a Coffee](https://www.buymeacoffee.com/rudrakabir)
 
