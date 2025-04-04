@@ -58,8 +58,8 @@ class VoiceMemosExporter:
             "1. Click 'Open Security Settings' below",
             "2. Click the lock 🔒 icon to make changes",
             "3. Click + to add an application",
-            "4. Navigate to Terminal.app or your Python application",
-            "   (usually in /Applications/Utilities/Terminal.app)",
+            "4. Navigate to and select 'Voice Memos Exporter'",
+            "   (the current application you're using)",
             "5. Select the application and click Open",
             "6. Ensure the checkbox next to the application is selected",
             "7. Restart this application"
