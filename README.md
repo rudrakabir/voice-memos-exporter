@@ -48,5 +48,8 @@ A: Yes! The app works completely offline. It just reads your Voice Memos and cop
 **Q: What if I have files with the same name?**
 A: The app automatically adds numbers to avoid overwriting files.
 
+Made with ❤️
 
-Made by Rudra Kabir
+If you find this extension useful, consider supporting me:  
+☕ [Buy Me a Coffee](https://www.buymeacoffee.com/rudrakabir)
+
