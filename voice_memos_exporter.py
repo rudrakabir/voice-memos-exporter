@@ -21,6 +21,7 @@ class VoiceMemosExporter:
         self.db_path = os.path.expanduser("~/Library/Group Containers/group.com.apple.VoiceMemos.shared/Recordings/CloudRecordings.db")
         self.recordings_path = os.path.dirname(self.db_path)
         self.search_var = tk.StringVar()
+        self.include_datetime_var = tk.BooleanVar(value=True)  # Default to True
         
         # Create GUI elements
         self.create_widgets()
@@ -135,8 +136,13 @@ class VoiceMemosExporter:
         ttk.Button(left_frame, text="Deselect All", command=self.deselect_all).pack(side=tk.LEFT, padx=5)
         ttk.Label(left_frame, text="Click checkbox column to select individual items").pack(side=tk.LEFT, padx=10)
         
-        # Right side export button
-        ttk.Button(button_frame, text="Export Selected", command=self.export_selected).pack(side=tk.RIGHT, padx=5)
+        # Right side export options and button
+        right_frame = ttk.Frame(button_frame)
+        right_frame.pack(side=tk.RIGHT)
+
+        ttk.Checkbutton(right_frame, text="Include datetime in filename",
+                       variable=self.include_datetime_var).pack(side=tk.LEFT, padx=5)
+        ttk.Button(right_frame, text="Export Selected", command=self.export_selected).pack(side=tk.LEFT, padx=5)
         
         # Configure grid weights
         main_frame.columnconfigure(0, weight=1)
@@ -307,10 +313,17 @@ class VoiceMemosExporter:
                 if result and result[0]:
                     source_path = os.path.join(self.recordings_path, result[0])
                     if os.path.exists(source_path):
-                        # Create destination path with original filename
+                        # Create destination path with optional datetime in filename
                         title = values[0]
+                        date_str = values[1]
                         _, ext = os.path.splitext(source_path)
-                        dest_path = os.path.join(export_dir, f"{title}{ext}")
+
+                        if self.include_datetime_var.get():
+                            # Convert date string to filesystem-safe format
+                            date_for_filename = date_str.replace(":", "-").replace(" ", "_")
+                            dest_path = os.path.join(export_dir, f"{date_for_filename} - {title}{ext}")
+                        else:
+                            dest_path = os.path.join(export_dir, f"{title}{ext}")
                         
                         # Handle duplicate filenames
                         base, ext = os.path.splitext(dest_path)
