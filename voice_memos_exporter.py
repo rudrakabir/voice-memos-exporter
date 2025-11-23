@@ -300,18 +300,20 @@ class VoiceMemosExporter:
                 values = self.tree.item(item)['values']
                 title = values[0]
                 date_str = values[1]
-                
-                # Query the actual file path
+
+                # Query the actual file path and date
                 cursor.execute("""
-                    SELECT ZPATH 
-                    FROM ZCLOUDRECORDING 
-                    WHERE datetime(ZDATE + 978307200, 'unixepoch') = ? 
+                    SELECT ZPATH, ZDATE
+                    FROM ZCLOUDRECORDING
+                    WHERE datetime(ZDATE + 978307200, 'unixepoch') = ?
                     AND (ZENCRYPTEDTITLE = ? OR ZPATH LIKE ?)
                 """, (date_str, title, f"%{os.path.basename(title)}%"))
                 result = cursor.fetchone()
                 
                 if result and result[0]:
                     source_path = os.path.join(self.recordings_path, result[0])
+                    recording_date = result[1]  # ZDATE from database
+
                     if os.path.exists(source_path):
                         # Create destination path with optional datetime in filename
                         title = values[0]
@@ -324,16 +326,25 @@ class VoiceMemosExporter:
                             dest_path = os.path.join(export_dir, f"{date_for_filename} - {title}{ext}")
                         else:
                             dest_path = os.path.join(export_dir, f"{title}{ext}")
-                        
+
                         # Handle duplicate filenames
                         base, ext = os.path.splitext(dest_path)
                         counter = 1
                         while os.path.exists(dest_path):
                             dest_path = f"{base}_{counter}{ext}"
                             counter += 1
-                        
+
                         # Copy file
                         shutil.copy2(source_path, dest_path)
+
+                        # Set file timestamps to match original recording date
+                        # Convert Apple timestamp to Unix timestamp
+                        date_obj = datetime(2001, 1, 1) + timedelta(seconds=recording_date)
+                        timestamp = date_obj.timestamp()
+
+                        # Set both access time and modification time
+                        os.utime(dest_path, (timestamp, timestamp))
+
                         exported_count += 1
                         
                         # Update progress
