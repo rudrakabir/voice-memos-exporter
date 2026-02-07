@@ -251,15 +251,17 @@ class VoiceMemosExporter:
             self.tree.set(item, 'checked', '☑')
 
     def select_all(self):
-        for item in self.tree.get_children():
-            if item not in self.selected_items:
-                self.selected_items.add(item)
-                self.tree.set(item, 'checked', '☑')
+        all_items = self.tree.get_children()
+        for item in all_items:
+            self.selected_items.add(item)
+            self.tree.set(item, 'checked', '☑')
+        self.tree.selection_set(all_items)
 
     def deselect_all(self):
         for item in self.selected_items:
             self.tree.set(item, 'checked', '☐')
         self.selected_items.clear()
+        self.tree.selection_remove(*self.tree.get_children())
 
     def export_selected(self):
         if not self.selected_items:
@@ -290,47 +292,63 @@ class VoiceMemosExporter:
             cursor = conn.cursor()
             
             exported_count = 0
+            failed = []
             for item in self.selected_items:
                 values = self.tree.item(item)['values']
                 title = values[0]
                 date_str = values[1]
-                
-                # Query the actual file path
-                cursor.execute("""
-                    SELECT ZPATH 
-                    FROM ZCLOUDRECORDING 
-                    WHERE datetime(ZDATE + 978307200, 'unixepoch') = ? 
-                    AND (ZENCRYPTEDTITLE = ? OR ZPATH LIKE ?)
-                """, (date_str, title, f"%{os.path.basename(title)}%"))
-                result = cursor.fetchone()
-                
-                if result and result[0]:
-                    source_path = os.path.join(self.recordings_path, result[0])
-                    if os.path.exists(source_path):
-                        # Create destination path with original filename
-                        title = values[0]
-                        _, ext = os.path.splitext(source_path)
-                        dest_path = os.path.join(export_dir, f"{title}{ext}")
-                        
-                        # Handle duplicate filenames
-                        base, ext = os.path.splitext(dest_path)
-                        counter = 1
-                        while os.path.exists(dest_path):
-                            dest_path = f"{base}_{counter}{ext}"
-                            counter += 1
-                        
-                        # Copy file
-                        shutil.copy2(source_path, dest_path)
-                        exported_count += 1
-                        
-                        # Update progress
-                        progress_var.set(exported_count)
-                        progress_window.update()
-            
+
+                try:
+                    # Query the actual file path
+                    cursor.execute("""
+                        SELECT ZPATH
+                        FROM ZCLOUDRECORDING
+                        WHERE datetime(ZDATE + 978307200, 'unixepoch') = ?
+                        AND (ZENCRYPTEDTITLE = ? OR ZPATH LIKE ?)
+                    """, (date_str, title, f"%{os.path.basename(title)}%"))
+                    result = cursor.fetchone()
+
+                    if result and result[0]:
+                        source_path = os.path.join(self.recordings_path, result[0])
+                        if os.path.exists(source_path):
+                            # Create destination path with original filename
+                            title = values[0]
+                            _, ext = os.path.splitext(source_path)
+                            dest_path = os.path.join(export_dir, f"{title}{ext}")
+
+                            # Handle duplicate filenames
+                            base, ext = os.path.splitext(dest_path)
+                            counter = 1
+                            while os.path.exists(dest_path):
+                                dest_path = f"{base}_{counter}{ext}"
+                                counter += 1
+
+                            # Copy file
+                            shutil.copy2(source_path, dest_path)
+                            exported_count += 1
+                        else:
+                            failed.append(title)
+                    else:
+                        failed.append(title)
+                except Exception:
+                    failed.append(title)
+
+                # Update progress
+                progress_var.set(exported_count + len(failed))
+                progress_window.update()
+
             conn.close()
             progress_window.destroy()
-            
-            messagebox.showinfo("Export Complete", f"Successfully exported {exported_count} recordings to {export_dir}")
+
+            if failed:
+                failed_list = "\n".join(f"  - {name}" for name in failed)
+                messagebox.showwarning(
+                    "Export Partially Complete",
+                    f"Exported {exported_count} recording(s) to {export_dir}\n\n"
+                    f"Failed to export {len(failed)} recording(s):\n{failed_list}"
+                )
+            else:
+                messagebox.showinfo("Export Complete", f"Successfully exported {exported_count} recordings to {export_dir}")
             
         except sqlite3.Error as e:
             messagebox.showerror("Database Error", f"Error accessing database: {str(e)}")

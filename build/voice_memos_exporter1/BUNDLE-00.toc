@@ -1,3 +1,0 @@
-([('voice_memos_exporter1',
-   '/Users/rudrakabir/Desktop/Voice Memos Exporter/dist/voice_memos_exporter1',
-   'EXECUTABLE')],)
