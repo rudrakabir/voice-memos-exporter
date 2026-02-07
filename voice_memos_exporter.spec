@@ -41,10 +41,10 @@ app = BUNDLE(
     name='Voice Memos Exporter.app',
     icon='icon.icns',
     bundle_identifier='com.rudrakabir.voicememosexporter',
-    version='1.0.1',
+    version='1.0.3',
     info_plist={
         'LSMinimumSystemVersion': '10.12',
-        'CFBundleShortVersionString': '1.0.2',
-        'CFBundleVersion': '1.0.2'
+        'CFBundleShortVersionString': '1.0.3',
+        'CFBundleVersion': '1.0.3'
     }
 )
