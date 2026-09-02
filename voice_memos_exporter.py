@@ -14,7 +14,9 @@ def sanitize_filename(title):
     """Return a safe macOS filename while preserving the memo title."""
     sanitized = INVALID_FILENAME_CHARS.sub('-', str(title))
     sanitized = re.sub(r'\s+', ' ', sanitized).strip(' .')
-    return sanitized or 'Untitled Recording'
+    if not sanitized.strip(' -_'):
+        return 'Untitled Recording'
+    return sanitized
 
 
 class VoiceMemosExporter:
