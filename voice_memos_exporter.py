@@ -7,6 +7,16 @@ from datetime import datetime, timedelta
 import re
 import subprocess
 
+INVALID_FILENAME_CHARS = re.compile(r'[/\x00-\x1f\x7f:]')
+
+
+def sanitize_filename(title):
+    """Return a safe macOS filename while preserving the memo title."""
+    sanitized = INVALID_FILENAME_CHARS.sub('-', str(title))
+    sanitized = re.sub(r'\s+', ' ', sanitized).strip(' .')
+    return sanitized or 'Untitled Recording'
+
+
 class VoiceMemosExporter:
     def __init__(self, root):
         self.root = root
@@ -313,8 +323,9 @@ class VoiceMemosExporter:
                         if os.path.exists(source_path):
                             # Create destination path with original filename
                             title = values[0]
+                            safe_title = sanitize_filename(title)
                             _, ext = os.path.splitext(source_path)
-                            dest_path = os.path.join(export_dir, f"{title}{ext}")
+                            dest_path = os.path.join(export_dir, f"{safe_title}{ext}")
 
                             # Handle duplicate filenames
                             base, ext = os.path.splitext(dest_path)
